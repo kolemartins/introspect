@@ -1,6 +1,6 @@
 'use strict';
 
-(function() {
+(function() {  
 
   function AttachmentResource($resource) {
     return {
