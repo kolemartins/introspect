@@ -1,0 +1,60 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+@import "../bower_components/bootswatch-scss/superhero/variables";
+@import '../bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap';
+@import "../bower_components/bootswatch-scss/superhero/bootswatch";
+$fa-font-path: "../bower_components/font-awesome/fonts";
+@import '../bower_components/font-awesome/scss/font-awesome';
+
+/**
+ * App-wide Styles
+ */
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+$panel-dark: #121423;
+
+$panel-light: #4E5D6C;
+
+.panel-cust {
+  background-color: $panel-dark;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.panel-cust2 {
+  background-color: $panel-dark;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.panel-light {
+  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-left: 15px;
+  background-color: #4E5D6C;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+// Component styles are injected through grunt
+/* inject:scss */
+@import 'account/login/login.scss';
+@import 'account/signup/signup.scss';
+@import 'admin/admin.scss';
+@import 'inquiry-dashboard/inquiry-dashboard.scss';
+@import 'inquiry-detail/inquiry-detail.scss';
+@import 'inquiry/inquiry.scss';
+@import 'main/main.scss';
+@import 'response/response.scss';
+@import '../components/footer/footer.scss';
+@import '../components/modal/modal.scss';
+/* endinject */

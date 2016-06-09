@@ -1,0 +1,52 @@
+.container
+  .row
+    .col-lg-12
+      h3.page-header.header-cust Respond
+  .row
+    .col-lg-7
+      .row
+        .col-xs-2
+          p Id:
+        .col-xs-10
+          p {{ vm.inquiry._id }}
+      .row
+        .col-xs-2
+          p Subject:
+        .col-xs-10
+          p {{ vm.inquiry.subject }}
+      .row
+        .container
+          label(for="note") Add Note:
+        .container
+          .panel
+            textarea.comment-text-area#note(ng-model="vm.note", rows="15", placeholder=" please enter response...")
+      .row
+        .col-lg-12
+          button.btn.btn-danger(ng-click="vm.respond('URGENT')") Urgent
+          button.btn.btn-warning(ng-click="vm.respond('RESP_CLOSE')") Respond / Close
+          button.btn.btn-info(ng-click="vm.respond('RESP')") Respond
+          button.btn.btn-default(ui-sref='inquiry') Cancel
+          button.btn.btn-default(ng-click='vm.launchFileUpload(vm.inquiry._id)')
+            img(src='assets/images/attachment_icon.svg', alt='attach doc' width="20px;" height="20px;")
+          .label.label-escalate(for="escalate", uib-tooltip="Manager will be copied on future correspondence if selected.")
+            input(name="escalate", type="checkbox", ng-model='vm.inquiry.escalated', ng-change="vm.updateEscalation()")
+            span &nbsp;&nbsp;&nbsp;Escalate
+    .col-lg-5
+      .panel.panel-detail
+        h3 Original Message
+        hr
+        hm-read-more(hm-text="{{ vm.inquiry.message }}",
+          hm-limit="{{ vm.textLimit }}",
+          hm-more-text="read more",
+          hm-less-text="read less",
+          hm-dots-class="dots",
+          hm-link-class="links")
+        .row.row-cust-margin
+          .container-fluid.pull-right
+            button.btn.btn-sm.btn-default.btn-notes(type="button", ng-show="vm.$state.current.name === 'response'", ui-sref="response.detail")
+              | response messages&nbsp;&nbsp;
+              span.badge {{ vm.notes.length }}
+            button.btn.btn-sm.btn-default.btn-notes(ng-show="vm.$state.current.name === 'response.detail'", ui-sref="response") hide response chain
+  .row
+    div(ui-view="")
+

@@ -1,0 +1,38 @@
+div.navbar.navbar-default.navbar-static-top(ng-controller='NavbarController')
+  div.container
+    div.navbar-header
+      button.navbar-toggle(type='button', ng-click='nav.isCollapsed = !nav.isCollapsed')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      // this is a hack
+      a.navbar-brand(href='/main', ng-show='nav.isLoggedIn()') introspect
+        span(style="font-size: small; color: #ff2500;") beta
+      a.navbar-brand(href='/login', ng-show='!nav.isLoggedIn()') introspect
+        span(style="font-size: small; color: #ff2500;") beta
+
+    div#navbar-main.navbar-collapse.collapse(uib-collapse='nav.isCollapsed')
+      ul.nav.navbar-nav
+        li(ng-show='nav.isLoggedIn()' ng-repeat='item in nav.menu', ui-sref-active='active')
+          a(ui-sref='{{item.state}}') {{item.title}}
+
+        li(ng-show='nav.isAdmin()', ui-sref-active='active')
+          a(ui-sref='admin') Admin
+
+      ul.nav.navbar-nav.navbar-right
+        li(ng-hide='nav.isLoggedIn()', ui-sref-active='active')
+          a(ui-sref='signup') Sign up
+
+        li(ng-hide='nav.isLoggedIn()', ui-sref-active='active')
+          a(ui-sref='login') Login
+
+        li(ng-show='nav.isLoggedIn()')
+          p.navbar-text Hello {{ nav.getCurrentUser().fname }}
+
+        li(ng-show='nav.isLoggedIn()', ui-sref-active='active')
+          a(ui-sref='settings')
+            span.glyphicon.glyphicon-cog
+
+        li(ng-show='nav.isLoggedIn()')
+          a(ui-sref='logout') Logout

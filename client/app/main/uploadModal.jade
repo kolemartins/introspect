@@ -1,0 +1,34 @@
+.modal-header
+  button.close(ng-if='modal.dismissable', type='button', ng-click='$dismiss()') &times;
+  h4.modal-title(ng-if='modal.title', ng-bind='modal.title')
+.modal-body
+  p(ng-if='modal.text', ng-bind='modal.text')
+  div(ng-if='modal.html', ng-bind-html='modal.html')
+  .row
+    .col-lg-12
+      .btn.btn-info(ngf-select="upload($files, modal.id)", ngf-multiple="true", style="float:right") Select Files
+  .row
+    .col-lg-6
+      p Drop Files:
+      .drop-box(ng-model="dropFiles",
+                  ngf-drop,
+                  ngf-select,
+                  ngf-drag-over-class="'dragover'",
+                  ngf-multiple="true"
+                  ngf-allow-dir="true") Drop files here or click to upload
+      div(ngf-no-file-drop) File Drag/Drop is not supported for this browser
+    .col-lg-6
+      h5 Files Uploaded:
+      ul.list-group
+        li.list-group-item(ng-repeat="f in files") {{ f.name }} {{ f.$error }} {{ f.$errorParam }}
+          span.label.label-default.label-pill.pill-cust.pull-xs-right {{ f.size | humanReadable }}
+  .row
+    .col-lg-12(ng-show="progressVal && progressVal != 0 && progressVal != 100")
+      p(style="font-size:x-small") Progress: {{ progressVal }}%
+      uib-progressbar(animate="false", value="progressVal", type="success", max="100")
+
+.modal-footer
+  button.btn(ng-repeat='button in modal.buttons', ng-class='button.classes', ng-click='submit(modal,button.id)', ng-bind='button.text')
+
+
+

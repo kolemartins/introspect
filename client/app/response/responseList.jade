@@ -1,0 +1,32 @@
+.row
+  .col-lg-2
+    h4 Response History:
+  .col-lg-4.col-lg-offset-6
+    .container-fluid
+      .inner-addon.right-addon
+        i.glyphicon.glyphicon-search
+        input#search.form-control(type="text", placeholder="search", ng-model="vm.searchNotes")
+.row
+  .col-lg-12
+    .container-fluid
+        h4.text-warning(ng-show="vm.showResult && vm.noteList.length === 0") No responses found.
+        .repeat-animation.hide-fade(ng-repeat="item in vm.noteList | filter: vm.searchNotes")
+          <!-- hr.hr-cust(noshade) -->
+          .card.card-cust(ng-class="{ 'resp-urgent': item.urgent === true }")
+            .card-block
+              .card-title
+                .row
+                  .col-lg-4
+                    kbd Sent From: {{ item.createdBy }}
+                  .col-lg-3.col-lg-offset-5
+                    kbd {{ item.createdDate | date: 'medium' }}
+                    span.label.label-danger(ng-show='item.urgent === true') URGENT
+              .row
+                .col-lg-12
+                  .resp-text
+                    hm-read-more(ng-class="{ 'text-warning': item.urgent === true }", hm-text="{{ item.note | nl2br }}",
+                    hm-limit="{{ vm.textLimit }}",
+                    hm-more-text="read more",
+                    hm-less-text="read less",
+                    hm-dots-class="dots",
+                    hm-link-class="links")

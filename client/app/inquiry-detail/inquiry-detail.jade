@@ -1,0 +1,49 @@
+.panel.panel-cust2(ng-show="vm.inquiry != ''")
+  .row
+    .panel.panel-light
+      button.close(type='button', ng-click='vm.hide()') &times;&nbsp;
+      h3 Inquiry Detail
+  hr.hr-noborder
+  .row
+    .col-lg-4.col-xs-2
+      p ID:
+    .col-lg-8.col-xs-6
+      | {{ vm.inquiry._id }}
+  .row
+    .col-lg-4.col-xs-2
+      p Name:
+    .col-lg-8.col-xs-6
+      | {{ vm.inquiry.person }}
+  .row
+    .col-lg-4.col-xs-2
+      p Topic:
+    .col-lg-8.col-xs-6
+      | {{ vm.inquiry.topic }}
+  .row
+    .col-lg-4.col-xs-2
+      p Subject:
+    .col-lg-8.col-xs-6
+      | {{ vm.inquiry.subject }}
+  .row
+    .col-lg-12
+      p Message:
+  .row.msg-block
+    .col-lg-12
+      hm-read-more(hm-text="{{ vm.inquiry.message }}",
+        hm-limit="{{ vm.textLimit }}",
+        hm-more-text="read more",
+        hm-less-text="read less",
+        hm-dots-class="dots",
+        hm-link-class="links")
+  .row
+     .col-lg-12
+       hr
+       .btn-group.visible-sm
+         btn.btn.btn-default.btn-sm(ng-click="vm.ack(vm.inquiry)") Acknowledge
+         btn.btn.btn-default.btn-sm(ng-click="vm.respond(vm.inquiry)") Respond
+         btn.btn.btn-danger.btn-sm(ng-click="vm.close(vm.inquiry)") Close
+       .btn-group.hidden-sm
+         btn.btn.btn-default(ng-click="vm.ack(vm.inquiry)") Acknowledge
+         btn.btn.btn-default(ng-click="vm.respond(vm.inquiry)") Respond
+         btn.btn.btn-danger(ng-click="vm.close(vm.inquiry)") Close
+

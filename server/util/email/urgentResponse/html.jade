@@ -1,0 +1,30 @@
+table.body-wrap
+  tr
+    td.container.container-nopad
+      table
+        tr
+          td.masthead(align='center')
+            h3 Urgent Response Notification
+        tr
+          td.content
+            p from: #{data.createdBy}
+            p sent: #{data.createdDate}
+            p re:   #{inquirySubject}
+        tr
+          td.content
+            p= data.note
+            table
+              tr
+                td(align='center')
+                  p
+                    a.button(href='#{url}') View Inquiry Detail
+  tr
+    td.container
+      table
+        tr
+          td.content.footer(align='center')
+            p simplicityjs&copy;
+
+
+
+

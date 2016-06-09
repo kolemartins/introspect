@@ -1,0 +1,30 @@
+table.body-wrap
+  tr
+    td.container.container-nopad
+      table
+        tr
+          td.masthead(align='center')
+            h3 File Upload Notification
+        tr
+          td.content
+            p from: #{uploadedBy}
+            p re:   #{inquiryId}
+        tr
+          td.content
+            p A file has been uploaded.
+            p File Name: #{data.fileName}
+            table
+              tr
+                td(align='center')
+                  p
+                    a.button(href='#{url}') Download
+  tr
+    td.container
+      table
+        tr
+          td.content.footer(align='center')
+            p simplicityjs&copy;
+
+
+
+

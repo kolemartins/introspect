@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-lg-12
+      h3.page-header.header-cust Inquiry List
+
+    .col-lg-8
+      .hidden-xs.grid(id='grid1', class='grid', ui-grid='vm.gridOptionsLarge', ui-grid-selection, ui-grid-resize-columns)
+      .visible-xs.grid(id='grid1', class='grid', ui-grid='vm.gridOptionsSmall', ui-grid-selection, ui-grid-resize-columns)
+
+    .col-lg-4
+      div(ui-view="")
+      <!-- inquiry-detail(inquiry="{{ vm.selectedInquiry }}", show="{{ vm.showDetail }}") -->
+
+
+
+
+

@@ -1,0 +1,136 @@
+.comment-text-area {
+  float: left;
+  max-width: 600px;
+  width:100%;
+  height: auto;
+}
+
+.links {
+}
+
+.row-cust-margin {
+  margin-left: 0px;
+  margin-top: 10px;
+}
+
+.card-cust{
+  background-color: #4E5D6C;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.hr-cust {
+  border-top: 1px solid #DF691A;
+}
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.panel-detail {
+  background-color: #121423;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.btn-notes{
+  border-radius: 13px;
+}
+
+.label-escalate {
+  padding: 9px 15px 9px 12px;
+  background-color: #D9534F;
+  font-size: 100%;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-top: 8px;
+
+}
+
+.resp-text {
+  margin: 10px 20px 10px 30px;
+}
+
+.resp-urgent {
+  background-color: #121423;
+}
+
+.float-right {
+  float: right;
+}
+
+.center {
+  width: 90%;
+  margin: auto;
+  align-content: center;
+}
+
+/*  ng-repeat Animation  */
+.repeat-animation.ng-enter,
+.repeat-animation.ng-leave,
+.repeat-animation.ng-move {
+  -webkit-transition: all linear 1s;
+  -moz-transition: all linear 1s;
+  -o-transition: all linear 1s;
+  transition: all linear 1s;
+
+  position:relative;
+  left:5px;
+}
+.repeat-animation.ng-enter {
+  opacity: 0;
+}
+.repeat-animation.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.repeat-animation.ng-leave {
+  opacity: 1;
+}
+.repeat-animation.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.repeat-animation.ng-move {
+  left:2px;
+  opacity: 0.5;
+}
+.repeat-animation.ng-move.ng-move-active {
+  left:0;
+  opacity: 1;
+}
+
+/*  ng-hide Animation  */
+.hide-fade.ng-hide-add, .hide-fade.ng-hide-remove {
+  -webkit-transition:all linear 1s;
+  -moz-transition:all linear 1s;
+  -o-transition:all linear 1s;
+  transition:all linear 1s;
+  display:block!important;
+}
+
+.hide-fade.ng-hide-add.ng-hide-add-active,
+.hide-fade.ng-hide-remove {
+  opacity:0;
+}
+
+.hide-fade.ng-hide-add,
+.hide-fade.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+}

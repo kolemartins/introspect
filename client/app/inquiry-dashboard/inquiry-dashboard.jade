@@ -1,0 +1,115 @@
+.row
+  .col-sm-12
+    .panel.panel-dashboard
+      .row
+        .panel.panel-light
+          h3 Inquiry
+      hr.hr-noborder
+      .row
+        .col-sm-1
+          p Subject:
+        .col-sm-11
+          p {{ vm.inquiry.subject }}
+      .row
+        .col-sm-12
+          p {{ vm.inquiry.message }}
+.row
+  .col-sm-6
+    .panel.panel-dashboard
+      .row
+        .panel.panel-light
+          h3 Inquiry Details
+      hr.hr-noborder
+      .row
+        .col-xs-4.col-sm-3
+          p Submitted By:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.requestedBy }}
+      .row
+        .col-xs-4.col-sm-3
+          p Submitted Date:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.requestDate | date: 'medium' }}
+      .row
+        .col-xs-4.col-sm-3
+          p Topic:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.topic }}
+      .row
+        .col-xs-4.col-sm-3
+          p Assigned To:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.person }}
+      .row
+        .col-xs-4.col-sm-3
+          p Priority:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.priority }}
+      .row
+        .col-xs-4.col-sm-3
+          p Status:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.status }}
+      .row
+        .col-xs-4.col-sm-3
+          p Type:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry.type }}
+  .col-sm-6
+    .panel.panel-dashboard
+      .row
+        .panel.panel-light
+          h3 Attachments
+      hr.hr-noborder
+      .row
+        .col-xs-6
+          h5 File
+        .col-xs-6
+          h5 Uploaded By
+      .row(ng-repeat='attachment in vm.attachments')
+        .col-xs-6
+          a(href='/api/file/download/{{ attachment.uniqueFileName }}', target='_blank') {{ attachment.fileName }}
+        .col-xs-6
+          small {{ attachment.uploadedBy }} on {{ attachment.uploadDate | date: 'shortDate' }}
+.row
+  .col-sm-12
+    .panel.panel-dashboard
+      .row
+        .panel.panel-light
+          h3 Response Chain
+      hr.hr-noborder
+      .row
+        .col-lg-2
+          h4 Response History:
+        .col-lg-4.col-lg-offset-6
+          .container-fluid
+            .inner-addon.right-addon
+              i.glyphicon.glyphicon-search
+              input#search.form-control(type="text", placeholder="search", ng-model="vm.searchNotes")
+      .row
+        .col-lg-12
+          .container-fluid
+            h4.text-warning(ng-show="vm.showResult && vm.noteList.length === 0") No responses found.
+            .repeat-animation.hide-fade(ng-repeat="item in vm.noteList | filter: vm.searchNotes")
+              <!-- hr.hr-cust(noshade) -->
+              .card.card-cust
+                .card-block
+                  .card-title
+                    .row
+                      .col-lg-4
+                        kbd Sent From: {{ item.createdBy }}
+                      .col-lg-3.col-lg-offset-5
+                        kbd {{ item.createdDate | date: 'medium' }}
+                        span.label.label-danger(ng-show='item.urgent === true') URGENT
+                  .row
+                    .col-lg-12
+                      .resp-text
+                        hm-read-more(hm-text="{{ item.note | nl2br }}",
+                        hm-limit="{{ vm.textLimit }}",
+                        hm-more-text="read more",
+                        hm-less-text="read less",
+                        hm-dots-class="dots",
+                        hm-link-class="links")
+
+
+

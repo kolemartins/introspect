@@ -1,0 +1,25 @@
+.modal-header
+  button.close(ng-if='modal.dismissable', type='button', ng-click='$dismiss()') &times;
+  h4.modal-title(ng-if='modal.title', ng-bind='modal.title')
+.modal-body
+  p(ng-if='modal.text', ng-bind='modal.text')
+  div(ng-if='modal.html', ng-bind-html='modal.html')
+  .row
+    .col-lg-2
+      p Id:
+    .col-lg-10
+      p {{ modal.id }}
+  .row
+    .col-lg-2
+      p Subject:
+    .col-lg-10
+      p {{ modal.subject }}
+  .container
+    label(for="note") note:
+  .container
+    .panel
+      textarea.comment-text-area-mod#note(rows="5", placeholder="optional note to requester", ng-model='modal.note')
+
+.modal-footer
+  button.btn(ng-repeat='button in modal.buttons', ng-class='button.classes', ng-click='submit(modal,button.id)', ng-bind='button.text')
+

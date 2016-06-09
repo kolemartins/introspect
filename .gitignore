@@ -1,0 +1,13 @@
+node_modules
+public
+.tmp
+.sass-cache
+.tscache
+.idea
+client/bower_components
+dist
+/server/config/local.env.js
+npm-debug.log
+coverage
+client/typings
+client/test_typings

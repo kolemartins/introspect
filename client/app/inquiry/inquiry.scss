@@ -1,0 +1,62 @@
+
+.grid {
+  width: 100%;
+  height: 450px;
+}
+.ui-grid-top-panel {
+  color: #2B3E50;
+}
+
+.ui-grid-row .ui-grid-cell {
+  color: #4E5D6C !important;
+}
+
+.ui-grid-menu-item{
+  color: #4E5D6C !important;
+}
+
+.btn-icon {
+  padding-bottom: 1px;
+  border-color: black;
+}
+
+.comment-text-area-mod {
+  float: left;
+  max-width: 400px;
+  width:100%;
+  height: auto;
+}
+
+.row-urgent {
+  background-color: red;
+}
+
+.ui-grid-cell.urgent {
+  /** background: #d9534f !important; **/
+  color: white !important;
+  background-color: #d9534f !important;
+  /** font-weight: bold; **/
+}
+
+.ui-grid-cell.soon {
+  color: white !important;
+  /** background-color: #d2850d !important; **/
+  background-color: #f0ad4e  !important;
+  /** font-weight: bold; **/
+}
+
+.ui-grid-cell.asap {
+  color: white !important;
+  background-color: #f37427 !important;
+  /** font-weight: bold; **/
+}
+
+.ui-grid-cell.whenever {
+  color: white !important;
+  background-color: #5bc0de !important;
+  /** font-weight: bold; **/
+}
+
+.cell-subject {
+  margin: -3px !important;
+}

@@ -1,0 +1,63 @@
+.container.panel.panel-cust.panel-main
+  .container
+    .row
+      .col-sm-10
+        h1.page-header.header-cust I need help....
+  .container
+    form(name='form', novalidate='').form-horizontal
+      .row
+        .form-group
+          .col-sm-2
+            .col-sm-12
+              label
+                input#req-type-1(type='radio',name='req-type', ng-model='vm.inquiry.type', value='business')
+                |  Business Issue
+            .col-sm-12
+              label
+                input#req-type-2(type='radio',name='req-type', ng-model='vm.inquiry.type', value='technical')
+                |  Technical Issue
+            .col-sm-12
+              label
+                input#req-type-3(type='radio',name='req-type',, ng-model='vm.inquiry.type', value='all', ng-checked='true')
+                |  Both / I don't know
+          .col-sm-4
+            label(for="group").control-label What topic:
+            select#group(ng-model='vm.inquiry.topic').form-control
+              option(ng-repeat="topic in vm.topics" ng-selected="topic.default") {{ topic.name }}
+
+          .col-sm-4
+            label(for="person").control-label What person:
+            select#person(ng-model='vm.inquiry.person').form-control
+              option(selected) I Don't Know
+              option(ng-repeat="user in vm.users") {{ user.fname }} {{ user.lname }}
+      .row
+        .col-sm-11
+          .form-group
+            label(for="subject").control-label Subject:
+            input#subject(type="text", ng-model='vm.inquiry.subject').form-control
+      .row
+        .col-sm-11
+          .form-group
+            textarea(rows="7", ng-model='vm.inquiry.message').form-control
+      .row
+        .col-sm-10.btn-group
+          .col-sm-3
+            button(type='submit', value='1', ng-click='vm.saveInquiry(1)').btn.btn-info.btn-block.btn-lg when you have time
+          .col-sm-3
+            button(type='submit', value='2', ng-click='vm.saveInquiry(2)').btn.btn-warning.btn-block.btn-lg need this pretty soon
+          .col-sm-3
+            button(type='submit', value='3',ng-click='vm.saveInquiry(3)').btn.btn-primary.btn-block.btn-lg need this ASAP
+          .col-sm-3
+            button(type='submit', value='4', ng-click='vm.saveInquiry(4)').btn.btn-danger.btn-block.btn-lg address this now
+            //button(type='submit', value='4', ng-click='vm.saveInquiry(4)', uib-tooltip='Urgent inquiries will be sent to the recipients cell phone immediately.').btn.btn-danger.btn-block.btn-lg address this now
+        .col-sm-1.sm-pad-left
+          a.btn.btn-default(ng-click="vm.launchFileUpload(vm.inquiry._id)")
+            img(src='assets/images/attachment_icon.svg', alt='attach doc' width="30px;" height="30px;")
+
+
+
+
+
+
+
+
