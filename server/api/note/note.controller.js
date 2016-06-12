@@ -99,19 +99,39 @@ export function create(req, res) {
 
 // sends email & text messages for urgent responses
 function notify(req, res){
+  var commType = req.body.sendNotifVia;
+  console.log('In notify method.  Sending message via --> ' + commType);
   return function(entity) {
     console.log('notify entity --> ' + entity);
     var commMod = new Communications();
     // if URGENT, send text message
     if (entity && entity.urgent) {
-      //send text
-      var msg = {
-        to: config.twilio.defaultDestination,
-        from: config.twilio.twilioPhone,
-        body: 'URGENT: An urgent response has been directed to you.',
-        url: config.email.emailLinkHost + '/response/' + entity.inquiryId + '/list'
-      };
-      commMod.sendText(msg);
+      // send text
+      if(commType === 'text'){
+        console.log('sending text...');
+        var msg = {
+          to: config.twilio.defaultDestination,
+          from: config.twilio.twilioPhone,
+          body: 'URGENT: An urgent response has been directed to you.',
+          url: config.email.emailLinkHost + '/response/' + entity.inquiryId + '/list'
+        };
+        commMod.sendText(msg);
+      }
+
+      // send voice
+      if(commType === 'voice'){
+        var msg = {
+          to: config.twilio.defaultDestination,
+          from: config.twilio.twilioPhone,
+          url: config.email.emailLinkHost + '/api/notification/voice-message/response/' + entity._id,
+          method: 'GET',
+          fallbackMethod: 'GET',
+          statusCallbackMethod: 'GET',
+          record: false
+        };
+        commMod.sendVoice(msg);
+      }
+
     }
     // send email for all additions to the notes collection
 

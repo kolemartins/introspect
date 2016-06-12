@@ -18,18 +18,19 @@
                 |  Technical Issue
             .col-sm-12
               label
-                input#req-type-3(type='radio',name='req-type',, ng-model='vm.inquiry.type', value='all', ng-checked='true')
+                input#req-type-3(type='radio',name='req-type', ng-model='vm.inquiry.type', value='all', ng-checked='true')
                 |  Both / I don't know
           .col-sm-4
             label(for="group").control-label What topic:
             select#group(ng-model='vm.inquiry.topic').form-control
-              option(ng-repeat="topic in vm.topics" ng-selected="topic.default") {{ topic.name }}
+              option(value='NONE', selected) I Don't Know
+              option(value="{{ topic._id }}", ng-repeat="topic in vm.topics") {{ topic.name }}
 
           .col-sm-4
             label(for="person").control-label What person:
             select#person(ng-model='vm.inquiry.person').form-control
-              option(selected) I Don't Know
-              option(ng-repeat="user in vm.users") {{ user.fname }} {{ user.lname }}
+              option(value='NONE', selected) I Don't Know
+              option(ng-repeat="user in vm.users", value='{{ user.email }}') {{ user.fname }} {{ user.lname }}
       .row
         .col-sm-11
           .form-group

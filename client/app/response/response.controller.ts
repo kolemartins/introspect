@@ -62,10 +62,7 @@ class ResponseController {
         subject: this.inquiry.subject,
         note: this.note,
         dismissable: true,
-        title: 'Send Urgent Response',
-        html: 'Urgent inquiries will trigger a text or voice call to the responding party. \
-              <br>Do you wish to proceed?<br><br>',
-        templateUrl: 'components/modal/modal.html',
+        templateUrl: 'app/response/urgentResponseModal.html',
         buttons: [{
           classes: 'btn-danger',
           text: 'Ok',
@@ -100,7 +97,7 @@ class ResponseController {
       //console.log('new note created.  Updating status of [' + this.inquiryId + '] with this response type [' + respType + ']');
       var ir = this.InquiryResource.inquiryStatus.get({
         id: this.inquiryId,
-        status: respType === 'RESP_CLOSE' ? 'CLS' : 'RSP',
+        status: respType === 'RESP_CLOSE' ? 'CLOSED' : 'COMMUNICATING',
         who: currentUser
       }, function(resp){
         //console.log('RESPONSE: ' + JSON.stringify(resp));

@@ -17,6 +17,7 @@ export default function(app) {
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/api/file', require('./api/file'));
+  app.use('/api/notification', require('./api/notification'));
   app.use('/auth', require('./auth').default);
 
   // static files

@@ -14,8 +14,8 @@ class MainController {
     this.InquiryResource = InquiryResource;
     this.awesomeThings = [];
     this.inquiry = {};
-    this.inquiry.topic = "I Don't Know";
-    this.inquiry.person = "I Don't Know";
+    this.inquiry.topic = "NONE";
+    this.inquiry.person = "NONE";
     this.topics = [];
     this.users = [];
     this.errors = {};
@@ -53,26 +53,47 @@ class MainController {
 
   saveInquiry(priority){
     //console.log("save inquiry.  priority: " + priority);
-    var currentUser = this.Auth.getCurrentUser().email;
-    this.inquiry.priority = priority;
-    this.inquiry.status = 'OPEN';
-    this.inquiry.requestedBy = currentUser;
-    this.inquiry.requestDate = new Date();
-    var ir;
-    if(this.inquiry._id){
-      ir = this.InquiryResource.inquiry.replace(this.inquiry);
-    } else {
-      ir = this.InquiryResource.inquiry.save(this.inquiry);
-    }
-    //ir = this.InquiryResource.inquiry.save(this.inquiry);
-    ir.$promise.then((resp) => {
-        //console.log('SAVE INQUIRY DATA: ' + JSON.stringify(resp));
-        this.$state.go('submitted');
-      })
-      .catch(err => {
-        this.errors = err.data;
-        console.log('ERR: ' + err.status + ' --> ' + JSON.stringify(err));
+    if(priority == 4) {
+      var modal = {
+        inquiry: this.inquiry,
+        dismissable: true,
+        templateUrl: 'app/main/urgentInquiryModal.html',
+        buttons: [{
+          classes: 'btn-danger',
+          text: 'Ok',
+          id: 'URGENT-INQUIRY'
+        }, {
+          classes: 'btn-default',
+          text: 'Cancel',
+          id: 'OK'
+        }]
+      }
+
+      var modal = this.Modal.open(modal,'modal-danger','md');
+      modal.result.then(function(event) {
+        //console.log('event: ' + event.type);
       });
+    } else {
+      var currentUser = this.Auth.getCurrentUser().email;
+      this.inquiry.priority = priority;
+      this.inquiry.status = 'OPEN';
+      this.inquiry.requestedBy = currentUser;
+      this.inquiry.requestDate = new Date();
+      var ir;
+      if(this.inquiry._id){
+        ir = this.InquiryResource.inquiry.replace(this.inquiry);
+      } else {
+        ir = this.InquiryResource.inquiry.save(this.inquiry);
+      }
+      ir.$promise.then((resp) => {
+          //console.log('SAVE INQUIRY DATA: ' + JSON.stringify(resp));
+          this.$state.go('submitted');
+        })
+        .catch(err => {
+          this.errors = err.data;
+          console.log('ERR: ' + err.status + ' --> ' + JSON.stringify(err));
+        });
+    }
   }
 
   launchFileUpload(_id){

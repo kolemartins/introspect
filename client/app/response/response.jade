@@ -8,7 +8,7 @@
         .col-xs-2
           p Id:
         .col-xs-10
-          p {{ vm.inquiry._id }}
+          a(ui-sref='inquiry-dashboard({ id: vm.inquiry._id })') {{ vm.inquiry._id }}
       .row
         .col-xs-2
           p Subject:
@@ -19,7 +19,7 @@
           label(for="note") Add Note:
         .container
           .panel
-            textarea.comment-text-area#note(ng-model="vm.note", rows="15", placeholder=" please enter response...")
+            textarea.comment-text-area#note(ng-model="vm.note", rows="5", placeholder=" please enter response...")
       .row
         .col-lg-12
           button.btn.btn-danger(ng-click="vm.respond('URGENT')") Urgent

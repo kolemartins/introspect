@@ -3,7 +3,7 @@
 
 angular.module('introspectApp.constants', [])
 
-.constant('appConfig', {userRoles:['guest','user','admin'],fileUploadUrl:'http://localhost:9000/api/file/upload/'})
+.constant('appConfig', {userRoles:['guest','user','admin'],fileUploadUrl:'http://www.simplicityjs.com/api/file/upload/'})
 
 ;
 })(angular);

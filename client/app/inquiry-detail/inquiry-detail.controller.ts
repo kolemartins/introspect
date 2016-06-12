@@ -67,7 +67,7 @@ class InquiryDetailComponent {
       buttons: [{
         classes: 'btn-danger',
         text: 'Close',
-        id: 'CLS'
+        id: 'CLOSED'
       }, {
         classes: 'btn-default',
         text: 'Cancel',

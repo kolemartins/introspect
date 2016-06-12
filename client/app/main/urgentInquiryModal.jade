@@ -1,0 +1,22 @@
+.modal-header
+  button.close(ng-if='modal.dismissable', type='button', ng-click='$dismiss()') &times;
+  h4.modal-title Create Urgent Inquiry
+.modal-body
+  .container-fluid
+    p Urgent inquiries will trigger a text or voice call to the other party.
+    p Do you wish to proceed?
+    .row
+      .col-sm-12
+        | Send message via:&nbsp;
+        .radio-inline
+          label
+            input(type='radio', name='urgentMsgTransport', value='text', ng-checked='true', ng-model='commType')
+            | text
+        .radio-inline
+          label
+            input(type='radio', name='urgentMsgTransport', value='voice', ng-checked='false', ng-model='commType')
+            | voice
+
+
+.modal-footer
+  button.btn(ng-repeat='button in modal.buttons', ng-class='button.classes', ng-click='submit(modal, button.id, commType)', ng-bind='button.text')

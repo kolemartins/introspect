@@ -117,28 +117,49 @@ function sendUrgentMessage(req, res) {
     if (entity) {
       if (entity.priority === '4') {  // this is an urgent request - SEND EMAIL & SMS messages
         //console.log('sending urgent notification. Sending to: ' + config.twilio.defaultDestination);
+        //console.log('Sending notification via --> ' + util.inspect(req.body));
         var commMod = new Communications();
+        commMod.getContactInfo(entity._id, req.session.user.email).then(function(user){
+          console.log('Response from commMod.getContactInfo --> ' + JSON.stringify(user));
+          // send urgent notifications
+          if(req.body.sendNotifVia === 'text'){
+            //send text
+            var msg = {
+              to: config.twilio.useDefault ? config.twilio.defaultDestination : user.cell,
+              from: config.twilio.twilioPhone,
+              body: 'URGENT: An urgent inquiry has been directed to you.',
+              url:  config.email.emailLinkHost + '/inquiry/' + entity._id + '/dashboard'
+            };
+            commMod.sendText(msg);
+          }
 
-        //send text
-        var msg = {
-          to: config.twilio.defaultDestination,
-          from: config.twilio.twilioPhone,
-          body: 'URGENT: An urgent inquiry has been directed to you.',
-          url:  config.email.emailLinkHost + '/inquiry/detail/' + entity._id
-        };
-        commMod.sendText(msg);
+          if(req.body.sendNotifVia === 'voice'){
+            var msg = {
+              to:  config.twilio.useDefault ? config.twilio.defaultDestination : user.cell,
+              from: config.twilio.twilioPhone,
+              url: config.email.emailLinkHost + '/api/notification/voice-message/inquiry/' + entity._id,
+              method: 'GET',
+              fallbackMethod: 'GET',
+              statusCallbackMethod: 'GET',
+              record: false
+            };
+            commMod.sendVoice(msg);
+          }
 
-        // send email
-        //console.log('Entity before mail options: ' + JSON.stringify(entity));
-        var mailOptions = {
-          to: config.email.defaultDestination,
-          subject: entity.subject,
-          data: entity,
-          inquiryId: entity._id,
-          url: config.email.emailLinkHost + '/inquiry/detail/' + entity._id,
-          type: 'UrgentInquiry'
-        };
-        commMod.sendEmail(mailOptions);
+          // send email
+          //console.log('Entity before mail options: ' + JSON.stringify(entity));
+          var mailOptions = {
+            to: config.twilio.useDefault ? config.email.defaultDestination : user.email,
+            subject: entity.subject,
+            data: entity,
+            inquiryId: entity._id,
+            url: config.email.emailLinkHost + '/inquiry/' + entity._id + '/dashboard',
+            type: 'UrgentInquiry'
+          };
+          commMod.sendEmail(mailOptions);
+        }, function(err){
+          console.log('Error in sendUrgentMessage --> ' + JSON.stringify(err))
+        });
       }
       return entity;
     }

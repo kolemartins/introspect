@@ -1,5 +1,5 @@
 'use strict';
-
+// THIS ENTIRE MODAL ARCHITECTURE NEEDS TO BE REDESIGNED BADLY - VERY CONFUSING AND CONTAINS LOGIC THAT SHOULD NOT EXIST IN THIS CONTROLLER!!!
 angular.module('introspectApp')
   .controller('ModalInstanceCtrl', function($scope, $uibModalInstance, Modal, InquiryResource, NoteResource, Auth, Upload, $timeout, appConfig, $state) {
     $scope.log = '';
@@ -8,10 +8,10 @@ angular.module('introspectApp')
     $scope.$state = $state;
 
     $scope.status = {
-      CLS: 'closed',
+      CLOSED: 'closed',
       ACK: 'acknowledged',
       OK: 'ok',
-      RSP: 'responded',
+      COMMUNICATING: 'responded',
       URGENT: 'submitted as urgent'
     }
 
@@ -24,10 +24,35 @@ angular.module('introspectApp')
     };
 
     // update the inquiry status accordingly
-    $scope.submit = function(data, actionId){
-      //console.log('**************** action: ' + actionId + '****************');
-      //console.log('data: ' + JSON.stringify(data));
-      if(actionId != 'OK'){  // OK = close modal and do nothing; all other actions require storing a note
+    $scope.submit = function(data, actionId, commType){  // commType = 'text' or 'voice'
+      commType = commType ? commType : 'text'; // having trouble with radio buttons sending value unless explicitly checked by user; defaulting to text as workaround
+      console.log('Send message via --> ' + commType);
+      console.log('**************** action: ' + actionId + '****************');
+      console.log('data: ' + JSON.stringify(data));
+
+      if(actionId === 'URGENT-INQUIRY'){  // originates from main.jade / main.controller.js
+        var currentUser = Auth.getCurrentUser().email;
+        data.inquiry.priority = 4;  // highest / urgent priority
+        data.inquiry.status = 'OPEN';
+        data.inquiry.requestedBy = currentUser;
+        data.inquiry.requestDate = new Date();
+        data.inquiry.sendNotifVia = commType;  // this is not really an attribute of inquiry but passing it in this object to get the value to the server for sending the notification
+        console.log('inquiry being saved --> ' + data.inquiry);
+        var ir;
+        if(data.inquiry._id){
+          ir = InquiryResource.inquiry.replace(data.inquiry);  // inquiry _id was generated when a file upload was performed before the inquiry was submitted
+        } else {
+          ir = InquiryResource.inquiry.save(data.inquiry);
+        }
+        ir.$promise.then((resp) => {
+            console.log('INQUIRY DATA SAVED: ' + JSON.stringify(resp));
+            $scope.$state.go('submitted');
+          })
+          .catch(err => {
+            $scope.errors = err.data;
+            console.log('ERR: ' + err.status + ' --> ' + JSON.stringify(err));
+          });
+      } else if(actionId !== 'OK'){  // OK = close modal and do nothing; all other actions require storing a note; not true any more - urgent inquiries do not require note / only new inquiry
         // set the inquiry status to the action / status chosen
         var currentUser = Auth.getCurrentUser();
         var ir = InquiryResource.inquiryStatus.get({ id: data.id, status: actionId, who: currentUser.email });  // update inquiry status
@@ -40,7 +65,8 @@ angular.module('introspectApp')
               note: data.note ? data.note : 'This inquiry has been ' + $scope.status[actionId] + ' by ' + currentUser.fname + ' ' + currentUser.lname + '.',
               urgent: actionId === 'URGENT' ? true : false,
               createdBy: currentUser.email,
-              createdDate: new Date()
+              createdDate: new Date(),
+              sendNotifVia: commType  // this is not really an attribute of note but passing it in this object to get the value to the server for sending the notification
             };
             var nr = NoteResource.note.save(noteObj);
             nr.$promise.then((resp) => {

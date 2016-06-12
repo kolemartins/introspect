@@ -24,9 +24,13 @@ var UserSchema = new Schema({
   },
   provider: String,
   salt: String,
-  confirmed: Boolean,
+  confirmed: {
+    type: Boolean,
+    default: false
+  },
   codeSent: Boolean,
-  confirmCode: String
+  confirmCode: String,
+  manager: String
 });
 
 /**

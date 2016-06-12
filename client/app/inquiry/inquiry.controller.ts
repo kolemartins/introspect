@@ -20,7 +20,7 @@ class InquiryComponent {
     this.colDefsLargeScreen.columnDefs = [
       { name:'topic', field: 'topic', visible: false },
       { name:'person', field: 'person', visible: false },
-      { name:'subject', field: 'subject', cellTemplate: '<div class="ui-grid-cell-contents btn btn-block cell-subject" ui-sref="inquiry-dashboard({ id: row.entity._id })">{{row.entity[col.field]}}</div>' },
+      { name:'subject', field: 'subject', cellTemplate: '<div class="ui-grid-cell-contents btn btn-block  cell-subject" ui-sref="inquiry-dashboard({ id: row.entity._id })">{{row.entity[col.field]}}</div>' },
       { name: 'priority', field: 'priority', visible: false, width: 70, cellTemplate: '<div style="margin: 3px 0px 3px 6px"><span class="label label-danger" ng-show="row.entity.priority == 4">URGENT</span><span class="label label-primary" ng-show="row.entity.priority == 3">&nbsp;&nbsp;&nbsp;&nbsp;ASAP&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="label label-warning" ng-show="row.entity.priority == 2">&nbsp;&nbsp;&nbsp;SOON&nbsp;&nbsp;&nbsp;</span><span class="label label-info" ng-show="row.entity.priority == 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>'},
       { name:'message', field: 'message', visible: false},
       { name:'requestedBy', field: 'requestedBy', width: 120, visible: true},
@@ -29,9 +29,9 @@ class InquiryComponent {
         name:'Action',
         width: 130,
         cellTemplate: "<div> \
-                        <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-ok' ng-click='grid.appScope.ack(row)'/></button> \
+                        <button class='btn btn-default btn-sm btn-icon' ng-show='row.entity.status === \"OPEN\"'><span class='glyphicon glyphicon-ok' ng-click='grid.appScope.ack(row)'/></button> \
                         <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-share-alt' ng-click='grid.appScope.respond(row)'/></button> \
-                        <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-remove' ng-click='grid.appScope.close(row)'/></button> \
+                        <button class='btn btn-default btn-sm btn-icon' ng-show='row.entity.status !== \"CLOSED\"'><span class='glyphicon glyphicon-remove' ng-click='grid.appScope.close(row)'/></button> \
                         </div>"
 
       }
@@ -41,7 +41,7 @@ class InquiryComponent {
     this.colDefsSmallScreen.columnDefs = [
       { name:'topic', field: 'topic', visible: false },
       { name:'person', field: 'person', visible: false },
-      { name:'subject', field: 'subject', cellTemplate: '<div class="ngCellText" ng-class="col.colIndex()"><span ng-cell-text><href="#">{{row.getProperty(col.field)}}</span></a></span></div>' },
+      { name:'subject', field: 'subject', cellTemplate: '<div class="ui-grid-cell-contents btn btn-block  cell-subject" ui-sref="inquiry-dashboard({ id: row.entity._id })">{{row.entity[col.field]}}</div>' },
       { name: 'priority', field: 'priority', visible: false, width: 70, cellTemplate: '<div style="margin: 3px 0px 3px 6px"><span class="label label-danger" ng-show="row.entity.priority == 4">URGENT</span><span class="label label-primary" ng-show="row.entity.priority == 3">&nbsp;&nbsp;&nbsp;&nbsp;ASAP&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="label label-warning" ng-show="row.entity.priority == 2">&nbsp;&nbsp;&nbsp;SOON&nbsp;&nbsp;&nbsp;</span><span class="label label-info" ng-show="row.entity.priority == 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOW&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>'},
       { name:'message', field: 'message', visible: false},
       { name:'requestDate', field: 'requestDate', visible: false, width: 120, cellFilter: 'date:"MMM dd, HH:mm:ss"'},
@@ -49,9 +49,9 @@ class InquiryComponent {
         name:'Action',
         width: 130,
         cellTemplate: "<div> \
-                        <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-ok' ng-click='grid.appScope.ack(row)'/></button> \
+                        <button class='btn btn-default btn-sm btn-icon' ng-show='row.entity.status === \"OPEN\"'><span class='glyphicon glyphicon-ok' ng-click='grid.appScope.ack(row)'/></button> \
                         <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-share-alt' ng-click='grid.appScope.respond(row)'/></button> \
-                        <button class='btn btn-default btn-sm btn-icon'><span class='glyphicon glyphicon-remove' ng-click='grid.appScope.close(row)'/></button> \
+                        <button class='btn btn-default btn-sm btn-icon' ng-show='row.entity.status !== \"CLOSED\"'><span class='glyphicon glyphicon-remove' ng-click='grid.appScope.close(row)'/></button> \
                         </div>"
 
       }
@@ -131,11 +131,11 @@ class InquiryComponent {
       }, {
         classes: 'btn-warning',
         text: 'Respond / Close',
-        id: 'CLS'
+        id: 'CLOSED'
       }, {
         classes: 'btn-info',
         text: 'Respond',
-        id: 'RSP'
+        id: 'COMMUNICATING'
       },
       {
         classes: 'btn-default',
@@ -166,7 +166,7 @@ class InquiryComponent {
       buttons: [{
         classes: 'btn-danger',
         text: 'Close',
-        id: 'CLS'
+        id: 'CLOSED'
       }, {
         classes: 'btn-default',
         text: 'Cancel',
@@ -176,7 +176,11 @@ class InquiryComponent {
 
     var modal = this.Modal.open(modal,'modal-danger','md');
     modal.result.then(function(event) {
-      //console.log('event: ' + event.type);
+      if(event === 'CLOSED') {
+        console.log('event: ' + JSON.stringify(event));
+      }
+    }, function(){
+      console.log('Modal dismissed at: ' + new Date());
     });
   }
 

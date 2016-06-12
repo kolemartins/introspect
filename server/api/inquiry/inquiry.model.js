@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 var InquirySchema = new mongoose.Schema({
-  status: String, // current status of inquiry (OPEN, ACK, CLS, RSP)
+  status: String, // current status of inquiry (OPEN, ACK, CLOSED, RSP)
   type: String, // business ot technical related inquiry
   topic: String, // the subject matter of the request
   person: String, // the person to whom the inquiry is currently directed

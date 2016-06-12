@@ -6,7 +6,7 @@ angular.module('introspectApp')
         //console.log('scope: ' + JSON.stringify(scope));
         var modalScope = $rootScope.$new();
         modalScope.modal = scope;
-
+        console.log('Using modal template --> ' + modalScope.modal.templateUrl);
         return $uibModal.open({
           animation: true,
           templateUrl: modalScope.modal.templateUrl || 'components/modal/modal.html',

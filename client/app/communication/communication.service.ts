@@ -2,5 +2,10 @@
 
 angular.module('introspectApp')
   .service('communication', function () {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+    return {
+      getContactInfo: (inquiry) => {
+        var topic = inquiry.topic;
+        var person = inquiry.person;
+      }
+    }
   });

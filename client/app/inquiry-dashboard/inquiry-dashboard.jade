@@ -1,4 +1,31 @@
-.row
+.row(ng-hide='vm.inquiry')
+  .col-sm-12
+    h4.text-center.text-warning  {{ vm.notFoundMessage }}
+.row(ng-show='vm.inquiry')
+  .col-sm-12
+    .container-fluid
+      nav.navbar.navbar-default.navbar-static-top
+        .container-fluid
+          .navbar-header
+            button.navbar-toggle(type='button', ng-click='vm.isCollapsed = !vm.isCollapsed')
+              span.sr-only Toggle Menu
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='#') Navbar Brand
+          div#bs-example-navbar-collapse-1.navbar-collapse.collapse(uib-collapse='vm.isCollapsed')
+            ul.nav.navbar-nav
+              li
+                button.btn.btn-primary Edit Inquiry
+              li
+                button.btn.btn-primary Edit Inquiry Details
+              li
+                button.btn.btn-primary Respond to Inquiry
+              li
+                button.btn.btn-primary Close Inquiry
+              li
+                button.btn.btn-primary Re-Assign Inquiry
+.row(ng-show='vm.inquiry')
   .col-sm-12
     .panel.panel-dashboard
       .row
@@ -6,20 +33,27 @@
           h3 Inquiry
       hr.hr-noborder
       .row
-        .col-sm-1
+        .col-sm-1.col-xs-3
           p Subject:
-        .col-sm-11
+        .col-sm-11.col-xs-9
           p {{ vm.inquiry.subject }}
       .row
-        .col-sm-12
+        .col-sm-1.col-xs-3
+          p Message:
+        .col-sm-11.col-xs-9
           p {{ vm.inquiry.message }}
-.row
+.row(ng-show='vm.inquiry')
   .col-sm-6
     .panel.panel-dashboard
       .row
         .panel.panel-light
           h3 Inquiry Details
       hr.hr-noborder
+      .row
+        .col-xs-4.col-sm-3
+          p ID:
+        .col-xs-8.col-sm-9
+          p {{ vm.inquiry._id }}
       .row
         .col-xs-4.col-sm-3
           p Submitted By:
@@ -44,7 +78,11 @@
         .col-xs-4.col-sm-3
           p Priority:
         .col-xs-8.col-sm-9
-          p {{ vm.inquiry.priority }}
+          .col-xs-3.status-badge
+            span.label.label-danger(ng-show="vm.inquiry.priority == 4") URGENT
+            span.label.label-primary(ng-show="vm.inquiry.priority == 3") &nbsp;&nbsp;&nbsp;&nbsp;ASAP&nbsp;&nbsp;&nbsp;&nbsp;
+            span.label.label-warning(ng-show="vm.inquiry.priority == 2") &nbsp;&nbsp;&nbsp;SOON&nbsp;&nbsp;&nbsp;
+            span.label.label-info(ng-show="vm.inquiry.priority == 1") &nbsp;&nbsp;&nbsp;&nbsp;LOW&nbsp;&nbsp;&nbsp;&nbsp;
       .row
         .col-xs-4.col-sm-3
           p Status:
@@ -54,31 +92,33 @@
         .col-xs-4.col-sm-3
           p Type:
         .col-xs-8.col-sm-9
-          p {{ vm.inquiry.type }}
+          p {{ vm.inquiry.type ? vm.inquiry.type : 'unknown' }}
   .col-sm-6
     .panel.panel-dashboard
       .row
         .panel.panel-light
           h3 Attachments
       hr.hr-noborder
-      .row
-        .col-xs-6
+      .row(ng-show="vm.attachments.length === 0")
+        h4.text-warning.text-center No attachments found.
+      .row(ng-show="vm.attachments.length !== 0")
+        .col-xs-5
           h5 File
-        .col-xs-6
+        .col-xs-7
           h5 Uploaded By
       .row(ng-repeat='attachment in vm.attachments')
-        .col-xs-6
+        .col-xs-5
           a(href='/api/file/download/{{ attachment.uniqueFileName }}', target='_blank') {{ attachment.fileName }}
-        .col-xs-6
+        .col-xs-7
           small {{ attachment.uploadedBy }} on {{ attachment.uploadDate | date: 'shortDate' }}
-.row
+.row(ng-show='vm.inquiry')
   .col-sm-12
     .panel.panel-dashboard
       .row
         .panel.panel-light
           h3 Response Chain
       hr.hr-noborder
-      .row
+      .row(ng-hide="vm.noteList.length === 0")
         .col-lg-2
           h4 Response History:
         .col-lg-4.col-lg-offset-6
@@ -88,11 +128,11 @@
               input#search.form-control(type="text", placeholder="search", ng-model="vm.searchNotes")
       .row
         .col-lg-12
-          .container-fluid
-            h4.text-warning(ng-show="vm.showResult && vm.noteList.length === 0") No responses found.
+          .container-responses
+            h4.text-center.text-warning(ng-show="vm.noteList.length === 0") No responses found.
             .repeat-animation.hide-fade(ng-repeat="item in vm.noteList | filter: vm.searchNotes")
               <!-- hr.hr-cust(noshade) -->
-              .card.card-cust
+              .card.card-resp-dashboard(ng-class="{ 'resp-urgent-dashboard': item.urgent === true }")
                 .card-block
                   .card-title
                     .row

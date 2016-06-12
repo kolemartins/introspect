@@ -3,5 +3,5 @@
 exports = module.exports = {
   // List of user roles
   userRoles: ['guest', 'user', 'admin'],
-  fileUploadUrl: 'http://localhost:9000/api/file/upload/'
+  fileUploadUrl: 'http://www.simplicityjs.com/api/file/upload/'
 };

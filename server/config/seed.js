@@ -48,18 +48,50 @@ User.find({}).remove()
         lname: 'User',
         email: 'test@example.com',
         password: 'test',
-        cell: '5126944632',
+        cell: '512-694-4632',
         role: 'user',
-        confirmed: true
+        confirmed: true,
+        manager: 'michael.stanley@gmail.com'
       }, {
         provider: 'local',
         fname: 'Michael',
         lname: 'Stanley',
         email: 'michael.stanley@gmail.com',
         password: 'admin',
-        cell: '5126944632',
+        cell: '512-694-4632',
         role: 'admin',
-        confirmed: true
+        confirmed: true,
+        manager: 'michael.stanley@gmail.com'
+      }, {
+        provider: 'local',
+        fname: 'Elysha',
+        lname: 'Stanley',
+        email: 'michael.stanley@gmail.com',
+        password: 'admin',
+        cell: '512-694-4632',
+        role: 'admin',
+        confirmed: true,
+        manager: 'michael.stanley@gmail.com'
+      }, {
+        provider: 'local',
+        fname: 'Taylor',
+        lname: 'Stanley',
+        email: 'michael.stanley@gmail.com',
+        password: 'admin',
+        cell: '512-694-4632',
+        role: 'admin',
+        confirmed: true,
+        manager: 'michael.stanley@gmail.com'
+      }, {
+        provider: 'local',
+        fname: 'Jack',
+        lname: 'Stanley',
+        email: 'michael.stanley@gmail.com',
+        password: 'admin',
+        cell: '512-694-4632',
+        role: 'admin',
+        confirmed: true,
+        manager: 'michael.stanley@gmail.com'
       })
       .then(() => {
         console.log('finished populating users');
@@ -70,22 +102,29 @@ User.find({}).remove()
 Topic.find({}).remove()
   .then(() => {
     Topic.create(
-      {
-        name: "I Don't Know",
-        description: 'Unknown.',
-        default: true,
+     {
+        name: 'Chores',
+        description: 'Chores.',
         active: true
       }, {
-        name: 'Integration',
-        description: 'Some integration resources.',
+        name: 'Sports',
+        description: 'Sports.',
         active: true
       }, {
-        name: 'BI',
-        description: 'Business Intelligence resources.',
+        name: 'Home',
+        description: 'Home.',
         active: true
       }, {
-        name: 'Linux',
-        description: 'Linux OS resources.',
+        name: 'Shopping',
+        description: 'Shopping.',
+        active: true
+      }, {
+        name: 'Education',
+        description: 'Education.',
+        active: true
+      }, {
+        name: 'Misc',
+        description: 'Misc.',
         active: true
       })
       .then(() => {
